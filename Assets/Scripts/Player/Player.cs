@@ -95,23 +95,24 @@ public class Player : MonoBehaviour
             }
         }
 
-        //Temp Input
-        if (Controller.SwitchToItem1())
-        {
-            ColorManager.Instance.ChangeColor(Color.red);
-        }
-        else if (Controller.SwitchToItem2())
-        {
-            ColorManager.Instance.ChangeColor(Color.blue);
-        }
-        else if (Controller.SwitchToItem3())
-        {
-            ColorManager.Instance.ChangeColor(Color.green);
-        }
-        else if (Controller.SwitchToItem4())
-        {
-            ColorManager.Instance.ChangeColor(Color.white);
-        }
+        ////Temp Input
+        //if (Controller.SwitchToItem1())
+        //{
+        //    ColorManager.Instance.ChangeColor(Color.red);
+        //}
+        //else if (Controller.SwitchToItem2())
+        //{
+        //    ColorManager.Instance.ChangeColor(Color.blue);
+        //}
+        //else if (Controller.SwitchToItem3())
+        //{
+        //    ColorManager.Instance.ChangeColor(Color.green);
+        //}
+        //else if (Controller.SwitchToItem4())
+        //{
+        //    ColorManager.Instance.ChangeColor(Color.white);
+        //}
+
     }
 
     void FixedUpdate()

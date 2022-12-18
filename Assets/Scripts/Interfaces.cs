@@ -5,6 +5,13 @@ using UnityEngine;
 namespace Interfaces
 {
 
+    public interface IInteractable
+    {
+        void DisplayInteraction();
+        void HideInteraction();
+        void Interact();
+    }
+
     public interface IController
     {
         void Init(Player player);
