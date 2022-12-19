@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
 
@@ -7,12 +8,15 @@ public class WeaponHandler : MonoBehaviour
 
     public Weapon ActiveWeapon;
     public int ActiveWeaponIndex = 0;
-    public Weapon[] Weapons;
+    public List<Weapon> Weapons;
+
+    public Transform HoldingObject;
 
     void Start()
     {
         m_CanFire = true;
         m_FireTimer = 0.0f;
+        m_IsFiring = false;
 
         StartCoroutine(BeginLateStart());
     }
@@ -41,19 +45,44 @@ public class WeaponHandler : MonoBehaviour
         m_SegmentCount = 2;
     }
 
+    public void AddWeapon(Weapon newWeapon)
+    {
+        Weapons.Add(newWeapon);
+        if(Weapons.Count == 1)
+        {
+            ChangeWeapon(0);
+        }
+    }
+
+    public void ChangeWeapon(int newIndex)
+    {
+        if(newIndex < 0 || newIndex >= Weapons.Count) { return; }
+
+        ActiveWeaponIndex = newIndex;
+        ActiveWeapon = Weapons[newIndex];
+        ActiveWeapon.Init();
+
+        if (m_CurrentlyHeldWeapon)
+        {
+            Destroy(m_CurrentlyHeldWeapon.gameObject);
+        }
+        m_CurrentlyHeldWeapon = Instantiate(ActiveWeapon.WeaponObject, HoldingObject.position, HoldingObject.rotation, HoldingObject);
+
+    }
+
     public void Init(IController controller)
     {
         if (controller == null) { return; }
 
         m_Controller = controller;
-        m_HoldingObject = transform;
 
-        if(Weapons.Length == 0) { return; }
+        m_Pivot = transform;
+
+        if(Weapons.Count == 0) { return; }
 
         ActiveWeaponIndex = 0;
-        ActiveWeapon = Weapons[0];
-
-        ActiveWeapon.Init();
+        ActiveWeapon = null;
+        m_IsFiring = false;
     }
 
     void Update()
@@ -82,29 +111,7 @@ public class WeaponHandler : MonoBehaviour
             }
         }
 
-        ////Temp Input
-        //if (m_Controller.SwitchToItem1())
-        //{
-        //    ActiveWeapon.SetSelectedColor(0);
-        //}
-        //else if (m_Controller.SwitchToItem2())
-        //{
-        //    ActiveWeapon.SetSelectedColor(1);
-        //}
-        //else if (m_Controller.SwitchToItem3())
-        //{
-        //    ActiveWeapon.SetSelectedColor(2);
-        //}
-
-        m_Line.positionCount = 0;
-
-        CheckIfCanFire();
-
-        bool isFiring = m_Controller.IsFiring();
-        if (isFiring && m_CanFire)
-        {
-            FireWeapon();
-        }
+        m_IsFiring = m_Controller.IsFiring();
     }
 
     void CheckIfCanFire()
@@ -156,7 +163,21 @@ public class WeaponHandler : MonoBehaviour
     void FixedUpdate()
     {
         if (m_Controller == null) { return; }
-        if (m_HoldingObject == null) { return; }
+        if (m_Pivot == null) { return; }
+        if (HoldingObject == null) { return; }
+
+        if (ActiveWeapon)
+        {
+            m_Line.positionCount = 0;
+
+            CheckIfCanFire();
+
+            
+            if (m_IsFiring && m_CanFire)
+            {
+                FireWeapon();
+            }
+        }
 
         //Vector3 currentRot = transform.rotation.eulerAngles;
         Vector3 controlRotation = m_Controller.GetControlRotation();
@@ -164,15 +185,18 @@ public class WeaponHandler : MonoBehaviour
         //currentRot = MathUtils.LerpTo(5.0f, currentRot, controlRotation, Time.fixedDeltaTime);
         Quaternion targetRot = Quaternion.Euler(controlRotation);
 
-        m_HoldingObject.transform.rotation = Quaternion.RotateTowards(m_HoldingObject.transform.rotation, targetRot, 100.0f * Time.fixedDeltaTime); //Quaternion.Euler(currentRot);
+        m_Pivot.transform.rotation = Quaternion.RotateTowards(HoldingObject.transform.rotation, targetRot, 100.0f * Time.fixedDeltaTime); //Quaternion.Euler(currentRot);
     }
 
     bool m_CanFire;
     float m_FireTimer;
 
     IController m_Controller;
-    Transform m_HoldingObject;
+    GameObject m_CurrentlyHeldWeapon;
+    Transform m_Pivot;
     LineRenderer m_Line;
     int m_SegmentCount;
+
+    bool m_IsFiring;
 
 }

@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(5, 5, 3000, 40), "Color Changes Everything");
+        GUI.Label(new Rect(5, 5, 3000, 60), "Color Changes Everything Alpha");
     }
 
     Player m_CurrentPlayer;

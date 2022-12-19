@@ -95,24 +95,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        ////Temp Input
-        //if (Controller.SwitchToItem1())
-        //{
-        //    ColorManager.Instance.ChangeColor(Color.red);
-        //}
-        //else if (Controller.SwitchToItem2())
-        //{
-        //    ColorManager.Instance.ChangeColor(Color.blue);
-        //}
-        //else if (Controller.SwitchToItem3())
-        //{
-        //    ColorManager.Instance.ChangeColor(Color.green);
-        //}
-        //else if (Controller.SwitchToItem4())
-        //{
-        //    ColorManager.Instance.ChangeColor(Color.white);
-        //}
-
     }
 
     void FixedUpdate()
@@ -197,10 +179,6 @@ public class Player : MonoBehaviour
 
         if (!validGroundFound)
         {
-            if (m_MovementState != MovementState.Disable)
-            {
-                
-            }
             return;
         }
 
@@ -353,6 +331,7 @@ public class Player : MonoBehaviour
 
         return moveAccel;
     }
+
     void ApplyVelocity(Vector3 velocity)
     {
         Vector3 velocityDiff = velocity - m_RigidBody.velocity;

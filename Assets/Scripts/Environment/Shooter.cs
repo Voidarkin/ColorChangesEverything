@@ -55,7 +55,6 @@ public class Shooter : MonoBehaviour
         float rayDist = 20.0f;
 
         RaycastHit[] hitInfos = Physics.SphereCastAll(rayStart, CheckRadius, rayDir, rayDist, m_CheckMask);
-        Debug.DrawRay(rayStart, rayDir, Color.black, 0.5f);
 
         m_Target = null;
 

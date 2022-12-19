@@ -29,6 +29,12 @@ public class DisappearColor : MonoBehaviour
 
         ColorManager.Instance.worldColorChange += ColorChanged;
 
+        ColorCanBeChanged ccbc = GetComponent<ColorCanBeChanged>();
+        if (ccbc)
+        {
+            ccbc.colorChange += MaterialColorChanged;
+        }
+
         m_CurrentNode = null;
 
         m_Active = true;
@@ -115,6 +121,21 @@ public class DisappearColor : MonoBehaviour
     public NodeArea GetNode()
     {
         return m_CurrentNode;
+    }
+
+    public void MaterialColorChanged()
+    {
+        m_Color = m_Renderer.material.color;
+        ColorChanged();
+    }
+
+    private void OnDestroy()
+    {
+        ColorCanBeChanged ccbc = GetComponent<ColorCanBeChanged>();
+        if (ccbc)
+        {
+            ccbc.colorChange -= MaterialColorChanged;
+        }
     }
 
     bool m_Active;

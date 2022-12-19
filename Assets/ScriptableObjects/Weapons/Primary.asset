@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Primary
   m_EditorClassIdentifier: 
   WeaponName: Primary Weapon
-  FireRate: 0.8
+  FireRate: 0.4
   WeaponObject: {fileID: 8412481620342675854, guid: 6dc80223ed308fd4a8ac3fd1813ee63f, type: 3}
   SelectedColor: {fileID: 11400000, guid: 6e25dfd7a06548a47ab0058d3b8cdee0, type: 2}
   Materials:
