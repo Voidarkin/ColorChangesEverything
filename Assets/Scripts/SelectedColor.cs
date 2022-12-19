@@ -18,6 +18,6 @@ public class SelectedColor : ScriptableObject
         return m_Color;
     }
 
-    Color m_Color;
+    [SerializeField] Color m_Color;
 
 }

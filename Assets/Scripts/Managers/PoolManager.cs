@@ -16,7 +16,7 @@ public class PoolManager : MonoBehaviour
         m_SecondsPoolRefreshRate = 15;
 
         if(CleanUpStaleObjects)
-       StartCoroutine( CleanPools() );
+            StartCoroutine( CleanPools() );
 
     }
 

@@ -70,6 +70,9 @@ public class FirstPersonCameraBehaviour : CameraBehaviour
         
         m_Camera.transform.position = m_GoalPos;
 
+        bool isColorWheelOpen = m_Player.Controller.IsOpeningColorMenu();
+        if (isColorWheelOpen) { return; }
+
         //Simple Rotation
         float mouseX = m_YawInput * YawRotateSpeed;
         float mouseY = m_PitchInput * PitchRotateSpeed;

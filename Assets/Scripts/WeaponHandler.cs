@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using Interfaces;
 
-[RequireComponent(typeof(LineRenderer))]
 public class WeaponHandler : MonoBehaviour
 {
 
@@ -31,8 +30,14 @@ public class WeaponHandler : MonoBehaviour
         {
             Init(player.Controller);
         }
-        m_Line = GetComponent<LineRenderer>();
-        m_Line.positionCount = 0;
+
+        LineRenderer line = GetComponentInChildren<LineRenderer>();
+        if (line)
+        {
+            m_Line = line;
+            m_Line.positionCount = 0;
+        }
+
         m_SegmentCount = 2;
     }
 
@@ -56,19 +61,40 @@ public class WeaponHandler : MonoBehaviour
         if (m_Controller == null) { return; }
         if (!ActiveWeapon) { return; }
 
-        //Temp Input
-        if (m_Controller.SwitchToItem1())
+        UI_Controller UIControl = FindObjectOfType<UI_Controller>();
+        bool isColorMenuOpen = m_Controller.IsOpeningColorMenu();
+        if (UIControl)
         {
-            ActiveWeapon.SetSelectedColor(0);
+            if (isColorMenuOpen)
+            {
+                if (!UIControl.IsCircularMenuOpen())
+                {
+                    UIControl.OpenCircularMenu(m_Controller, ActiveWeapon);
+                }
+            }
+            else
+            {
+                if (UIControl.IsCircularMenuOpen())
+                {
+                    UIControl.CloseCircularMenu();
+
+                }
+            }
         }
-        else if (m_Controller.SwitchToItem2())
-        {
-            ActiveWeapon.SetSelectedColor(1);
-        }
-        else if (m_Controller.SwitchToItem3())
-        {
-            ActiveWeapon.SetSelectedColor(2);
-        }
+
+        ////Temp Input
+        //if (m_Controller.SwitchToItem1())
+        //{
+        //    ActiveWeapon.SetSelectedColor(0);
+        //}
+        //else if (m_Controller.SwitchToItem2())
+        //{
+        //    ActiveWeapon.SetSelectedColor(1);
+        //}
+        //else if (m_Controller.SwitchToItem3())
+        //{
+        //    ActiveWeapon.SetSelectedColor(2);
+        //}
 
         m_Line.positionCount = 0;
 
@@ -96,8 +122,6 @@ public class WeaponHandler : MonoBehaviour
 
     void FireWeapon()
     {
-        Debug.Log("WeaponFired");
-
         m_Line.materials[0].color = Color.white;
         //Transform muzzlePos = transform.Find("Muzzle");
         Transform muzzlePos = GetComponentInChildren<WeaponAdjustments>().GetMuzzle();

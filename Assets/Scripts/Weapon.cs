@@ -30,6 +30,9 @@ public class Weapon : ScriptableObject
         {
             m_SelectedColor = Materials[0].color;
         }
+
+        SelectedColor.ChangeColor(m_SelectedColor);
+        SelectedColor.selectedColorChange += SelectedColorChanged;
     }
 
     public float GetFireRate() { return FireRate; }
@@ -51,6 +54,19 @@ public class Weapon : ScriptableObject
         SelectedColor.ChangeColor(Materials[m_Index].color);
     }
 
+    public void SelectedColorChanged()
+    {
+        m_SelectedColor = SelectedColor.GetColor();
+        for(int i = 0; i < Materials.Length; i++)
+        {
+            if(m_SelectedColor == Materials[i].color)
+            {
+                m_Index = i;
+            }
+        }
+    }
+
+    public int GetIndex() { return m_Index; }
     public Material GetSelectedMaterial() { return Materials[m_Index]; }
     public Color GetSelectedColor() { return m_SelectedColor; }
 

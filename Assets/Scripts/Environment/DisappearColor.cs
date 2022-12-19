@@ -27,7 +27,9 @@ public class DisappearColor : MonoBehaviour
             m_Rigidbody = rigidbody;
         }
 
-        ColorManager.Instance.colorChange += ColorChanged;
+        ColorManager.Instance.worldColorChange += ColorChanged;
+
+        m_CurrentNode = null;
 
         m_Active = true;
         m_IsDirty = true;
@@ -42,31 +44,42 @@ public class DisappearColor : MonoBehaviour
     {
         if (!m_IsDirty) { return; }
 
-        if (m_Color == ColorManager.Instance.Color)
+        SetActive();
+
+        SetEnables();
+
+        m_IsDirty = false;
+    }
+
+    private void SetActive()
+    {
+        if (m_CurrentNode)
         {
-            m_Active = false;
+            m_Active = (m_Color != m_CurrentNode.GetNodeColor()) ? true : false;
         }
         else
         {
-            m_Active = true;
+            m_Active = (m_Color != ColorManager.Instance.Color) ? true : false;
         }
+    }
 
-        if (m_Renderer) 
-        { 
+    private void SetEnables()
+    {
+        if (m_Renderer)
+        {
             m_Renderer.enabled = m_Active;
         }
 
-        if (m_Collider) 
-        { 
+        if (m_Collider)
+        {
             m_Collider.enabled = m_Active;
         }
 
-        if (m_Rigidbody) 
-        { 
+        if (m_Rigidbody)
+        {
             m_Rigidbody.useGravity = m_Active;
+            m_Rigidbody.velocity = Vector3.zero;
         }
-
-        m_IsDirty = false;
     }
 
     private void OnEnable()
@@ -74,8 +87,40 @@ public class DisappearColor : MonoBehaviour
         ColorChanged();
     }
 
+    public Color GetColor()
+    {
+        return m_Color;
+    }
+
+    public void SetNode(NodeArea na)
+    {
+        if (na)
+        {
+            m_CurrentNode = na;
+            m_CurrentNode.areaColorChange += ColorChanged;
+        }
+        m_IsDirty = true;
+    }
+
+    public void NodeNull()
+    {
+        if (m_CurrentNode)
+        {
+            m_CurrentNode.areaColorChange -= ColorChanged;
+        }
+        m_CurrentNode = null;
+        m_IsDirty = true;
+    }
+
+    public NodeArea GetNode()
+    {
+        return m_CurrentNode;
+    }
+
     bool m_Active;
     bool m_IsDirty;
+
+    [SerializeField] NodeArea m_CurrentNode;
 
     [SerializeField] MeshRenderer m_Renderer;
     [SerializeField] Color m_Color;

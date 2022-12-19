@@ -138,6 +138,12 @@ public class DefaultController : IController
     {
         return Input.GetButtonDown("Menu");
     }
+
+    public bool IsOpeningColorMenu()
+    {
+        return Input.GetButton("ColorMenu");
+    }
+
     public bool SwitchToItem1()
     {
         //TODO: Getting input from the keyboard directly is convenient for getting features in quickly for prototyping etc.
@@ -190,6 +196,8 @@ public class DefaultController : IController
 
         Cursor.visible = !m_EnableMouseControl;
     }
+
+    
 
     bool m_EnableMouseControl;
 

@@ -12,7 +12,7 @@ public class ColorManager : MonoBehaviour
     public VolumeProfile Profile;
 
     public delegate void onColorChange();
-    public onColorChange colorChange;
+    public onColorChange worldColorChange;
 
     void Awake()
     {
@@ -60,7 +60,7 @@ public class ColorManager : MonoBehaviour
         if(Color == color) { return; }
 
         Color = color;
-        colorChange?.Invoke();
+        worldColorChange?.Invoke();
         m_IsDirty = true;
     }
 

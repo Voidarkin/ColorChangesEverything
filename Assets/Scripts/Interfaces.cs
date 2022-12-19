@@ -48,6 +48,8 @@ namespace Interfaces
 
         bool IsAttacking();
 
+        bool IsOpeningColorMenu();
+
         
         bool SwitchToItem1();
 

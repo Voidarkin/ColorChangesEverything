@@ -6,6 +6,9 @@ using UnityEngine;
 public class ColorCanBeChanged : MonoBehaviour
 {
 
+    public delegate void onSelectedColorChange();
+    public onSelectedColorChange colorChange;
+
     void Start()
     {
         m_Renderer = GetComponent<MeshRenderer>();
@@ -15,6 +18,12 @@ public class ColorCanBeChanged : MonoBehaviour
     public void ChangeMaterial(Material mat)
     {
         m_Renderer.material = mat;
+        colorChange?.Invoke();
+    }
+
+    public Color GetColor()
+    {
+        return m_Renderer.material.color;
     }
 
     MeshRenderer m_Renderer;
