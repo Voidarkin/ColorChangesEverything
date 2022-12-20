@@ -78,6 +78,12 @@ public class ColorManager : MonoBehaviour
         {
             ccbc.ResetMat();
         }
+
+        Node[] nodes = FindObjectsOfType<Node>();
+        foreach (Node node in nodes)
+        {
+            node.ResetNode();
+        }
     }
 
     void OnDestroy()

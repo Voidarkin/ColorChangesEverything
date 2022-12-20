@@ -80,7 +80,7 @@ public class Node : MonoBehaviour
 
     public void ResetNode()
     {
-        
+        Deactivate();
     }
 
     private void OnDestroy()
