@@ -22,6 +22,13 @@ public class Bullet : MonoBehaviour
         {
             m_Collider = collider;
         }
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+        {
+            m_Rigidbody = rb;
+            m_Rigidbody.useGravity = false;
+        }
     }
 
     public void Init(Vector3 position, Vector3 velocity, Color color)
@@ -69,11 +76,18 @@ public class Bullet : MonoBehaviour
             m_Collider.enabled = true;
         }
 
+        DisappearColor dc = GetComponent<DisappearColor>();
+        if (dc)
+        {
+            dc.NodeNull();
+        }
+
         this.gameObject.SetActive(false);
     }
 
     MeshRenderer m_Renderer;
     Collider m_Collider;
+    Rigidbody m_Rigidbody;
 
     float m_TimeLeftTillDestroy;
     Vector3 m_Velocity;

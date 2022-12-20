@@ -5,6 +5,7 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
 
+    public Button AttachedButton;
     public GameObject Area;
     public NodeArea EffectedArea;
    
@@ -16,6 +17,11 @@ public class Node : MonoBehaviour
             m_ColorCanBeChanged = ccbc;
             m_ColorCanBeChanged.colorChange += ColorChanged;
         }
+
+        if (AttachedButton)
+        {
+            AttachedButton.buttonPressed += ButtonPressed;
+        }
     }
 
     void Update()
@@ -23,9 +29,33 @@ public class Node : MonoBehaviour
         
     }
 
+    public void ButtonPressed()
+    {
+        GameObject linkedColor = AttachedButton.LinkedColorPlate;
+        MeshRenderer linkedColorMesh = linkedColor.GetComponent<MeshRenderer>();
+        if (linkedColorMesh)
+        {
+            Color color = linkedColorMesh.material.color;
+
+            MeshRenderer nodeRenderer = GetComponent<MeshRenderer>();
+            if (nodeRenderer)
+            {
+                nodeRenderer.material.color = color;
+            }
+
+            ChangeColor(color);
+        }
+    }
+
     public void ColorChanged()
     {
-        if (m_ColorCanBeChanged.GetColor() != Color.white)
+        if(!AttachedButton)
+            ChangeColor(m_ColorCanBeChanged.GetColor());
+    }
+
+    public void ChangeColor(Color color)
+    {
+        if (color != Color.white)
         {
             Activate();
         }
@@ -33,11 +63,6 @@ public class Node : MonoBehaviour
         {
             Deactivate();
         }
-        ChangeColor(m_ColorCanBeChanged.GetColor());
-    }
-
-    public void ChangeColor(Color color)
-    {
         EffectedArea.ChangeColor(color);
     }
 
@@ -51,6 +76,19 @@ public class Node : MonoBehaviour
     {
         EffectedArea.Deactivate();
         Area.SetActive(false);
+    }
+
+    public void ResetNode()
+    {
+        
+    }
+
+    private void OnDestroy()
+    {
+        if (AttachedButton)
+        {
+            AttachedButton.buttonPressed -= ButtonPressed;
+        }
     }
 
     ColorCanBeChanged m_ColorCanBeChanged;

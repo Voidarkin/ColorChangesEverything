@@ -28,6 +28,13 @@ public class UI_CircularMenuItem : MonoBehaviour
         m_Image.color = color;
     }
 
+    public Image GetImage() { return m_Image; }
+
+    public void SetImagePercentage(float percent)
+    {
+        m_Image.fillAmount = percent;
+    }
+
     public void Select()
     {
         m_Anim.SetBool("Selected", true);

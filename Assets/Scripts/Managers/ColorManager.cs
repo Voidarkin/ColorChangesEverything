@@ -69,6 +69,17 @@ public class ColorManager : MonoBehaviour
         return (Color == color);
     }
 
+    public void ResetColor()
+    {
+        ChangeColor(Color.white);
+
+        ColorCanBeChanged[] objects = FindObjectsOfType<ColorCanBeChanged>();
+        foreach(ColorCanBeChanged ccbc in objects)
+        {
+            ccbc.ResetMat();
+        }
+    }
+
     void OnDestroy()
     {
         if (!m_ColorAdjustments) { return; }

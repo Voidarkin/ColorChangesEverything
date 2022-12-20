@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a269ed43e83d2f43adafa6631d5e1cc, type: 3}
-  m_Name: Primary
+  m_Name: Level 5
   m_EditorClassIdentifier: 
   WeaponName: Primary Weapon
   FireRate: 0.4
-  WeaponObject: {fileID: 8412481620342675854, guid: 6dc80223ed308fd4a8ac3fd1813ee63f, type: 3}
+  WeaponObject: {fileID: 8412481620342675854, guid: 9301e2671490cf84aa7d5d2c45c111d8, type: 3}
   SelectedColor: {fileID: 11400000, guid: 6e25dfd7a06548a47ab0058d3b8cdee0, type: 2}
   Materials:
   - {fileID: 2100000, guid: 6515743823bdbf149a681a907f7da965, type: 2}
+  - {fileID: 2100000, guid: aae0361dbe88c9b4ca5fae225d9c014d, type: 2}
   - {fileID: 2100000, guid: 2943beb8f3b1adb4ba1c388e77b70b6c, type: 2}
+  - {fileID: 2100000, guid: 5a732f870aec49048add57984a16a145, type: 2}
   - {fileID: 2100000, guid: 520be079f7424164ca55df3a0395d2ec, type: 2}

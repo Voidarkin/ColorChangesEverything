@@ -26,6 +26,12 @@ public class ColorCanBeChanged : MonoBehaviour
         return m_Renderer.material.color;
     }
 
+    public void ResetMat()
+    {
+        m_Renderer.material = m_DefaultMat;
+        colorChange?.Invoke();
+    }
+
     MeshRenderer m_Renderer;
     Material m_DefaultMat;
 }

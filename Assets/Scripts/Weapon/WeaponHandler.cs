@@ -47,11 +47,14 @@ public class WeaponHandler : MonoBehaviour
 
     public void AddWeapon(Weapon newWeapon)
     {
-        Weapons.Add(newWeapon);
-        if(Weapons.Count == 1)
+        if(Weapons.Count != 0)
         {
-            ChangeWeapon(0);
+            Weapons.Clear();
         }
+
+        Weapons.Add(newWeapon);
+        ChangeWeapon(0);
+        
     }
 
     public void ChangeWeapon(int newIndex)

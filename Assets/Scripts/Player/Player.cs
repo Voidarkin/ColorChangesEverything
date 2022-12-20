@@ -85,6 +85,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
+        bool isPressingMenu = Controller.ToggleMenu();
+        if (isPressingMenu)
+        {
+            //TODO: Quit for now, in future opens menu
+            Application.Quit();
+        }
+
         if(m_Invuln)
         {
             InvulnTimer += Time.deltaTime;

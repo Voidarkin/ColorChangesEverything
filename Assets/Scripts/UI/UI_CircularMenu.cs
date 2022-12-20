@@ -36,6 +36,9 @@ public class UI_CircularMenu : MonoBehaviour
             Color color = activeWeapon.Materials[i].color;
             item.SetColor(color);
 
+            float percent = (float)(angle / 360.0f);
+            item.SetImagePercentage(percent);
+
             Vector3 rot = m_MenuItems[i].transform.rotation.eulerAngles;
             rot.z = angle * i;
             m_MenuItems[i].transform.rotation = Quaternion.Euler(rot);

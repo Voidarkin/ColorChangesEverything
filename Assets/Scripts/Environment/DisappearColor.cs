@@ -84,7 +84,8 @@ public class DisappearColor : MonoBehaviour
         if (m_Rigidbody)
         {
             m_Rigidbody.useGravity = m_Active;
-            m_Rigidbody.velocity = Vector3.zero;
+            if(!m_Rigidbody.isKinematic)
+                m_Rigidbody.velocity = Vector3.zero;
         }
     }
 

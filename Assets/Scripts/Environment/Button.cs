@@ -8,6 +8,9 @@ public class Button : MonoBehaviour, IInteractable
 
     public GameObject LinkedColorPlate;
 
+    public delegate void onButtonPressed();
+    public onButtonPressed buttonPressed;
+
     void Start()
     {
         if (!LinkedColorPlate) { return; }
@@ -37,7 +40,7 @@ public class Button : MonoBehaviour, IInteractable
         {
             cwc.ChangeColor(m_Renderer.material.color);
         }
-
+        buttonPressed?.Invoke();
     }
 
     MeshRenderer m_Renderer;
