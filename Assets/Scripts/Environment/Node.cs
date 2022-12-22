@@ -5,7 +5,7 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
 
-    public Button AttachedButton;
+    public InteractButton AttachedButton;
     public GameObject Area;
     public NodeArea EffectedArea;
    

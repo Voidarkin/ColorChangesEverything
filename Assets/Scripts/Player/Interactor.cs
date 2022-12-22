@@ -30,6 +30,8 @@ public class Interactor : MonoBehaviour
 
     void Update()
     {
+        if(m_Controller == null) { return; }
+
         bool isInteracting = m_Controller.IsInteracting();
         if (isInteracting)
         {

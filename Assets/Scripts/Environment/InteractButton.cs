@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
 
-public class Button : MonoBehaviour, IInteractable
+public class InteractButton : MonoBehaviour, IInteractable
 {
 
     public GameObject LinkedColorPlate;

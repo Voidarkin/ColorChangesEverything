@@ -6,6 +6,8 @@ using Interfaces;
 public class UI_Controller : MonoBehaviour
 {
 
+    public GameObject PauseMenuUI;
+
     void Awake()
     {
         UI_CircularMenu circleMenu = GetComponentInChildren<UI_CircularMenu>();
@@ -22,6 +24,8 @@ public class UI_Controller : MonoBehaviour
             m_Reticle = reticle;
         }
 
+        PauseMenuUI.SetActive(false);
+        m_PauseMenuOpen = false;
     }
 
     void Start()
@@ -32,6 +36,22 @@ public class UI_Controller : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool IsPauseMenuOpen() { return m_PauseMenuOpen; }
+
+    public void OpenPauseMenu()
+    {
+        PauseMenuUI.SetActive(true);
+        m_PauseMenuOpen = true;
+        m_Reticle.gameObject.SetActive(false);
+    }
+
+    public void ClosePauseMenu()
+    {
+        PauseMenuUI.SetActive(false);
+        m_PauseMenuOpen = false;
+        m_Reticle.gameObject.SetActive(true);
     }
 
     public bool IsCircularMenuOpen() { return m_CircularMenuOpen; }
@@ -54,6 +74,13 @@ public class UI_Controller : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
+    public void ExitToMain()
+    {
+        int currentScene = LevelManager.Instance.GetCurrentScene();
+        LevelManager.Instance.LoadLevel(currentScene, 0);
+    }
+
+    bool m_PauseMenuOpen;
     bool m_CircularMenuOpen;
     [SerializeField] UI_CircularMenu m_CircularMenu;
     [SerializeField] UI_Reticle m_Reticle;

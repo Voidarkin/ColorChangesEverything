@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     {
         if (LevelManager.Instance.GetPlayer() == null)
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
 
             LevelManager.Instance.RegisterPlayer(this);
 
@@ -85,12 +85,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
-        bool isPressingMenu = Controller.ToggleMenu();
-        if (isPressingMenu)
+        UI_Controller UIControl = FindObjectOfType<UI_Controller>();
+        if (UIControl)
         {
-            //TODO: Quit for now, in future opens menu
-            Application.Quit();
+            bool isPressingMenu = Controller.ToggleMenu();
+            if (isPressingMenu)
+            {
+                if (!UIControl.IsPauseMenuOpen())
+                {
+                    UIControl.OpenPauseMenu();
+                    DisablePlayer();
+                }
+                else
+                {
+                    UIControl.ClosePauseMenu();
+                    EnablePlayer();
+                }
+            }
         }
 
         if(m_Invuln)
@@ -388,10 +399,14 @@ public class Player : MonoBehaviour
             default:
                 break;
         }
-
+        m_PreviousMovementState = m_MovementState;
         m_MovementState = movementState;
     }
 
+    public void DisablePlayer() { SetMovementState(MovementState.Disable); }
+    public void EnablePlayer() { SetMovementState(m_PreviousMovementState); }
+
+    [SerializeField] MovementState m_PreviousMovementState;
     [SerializeField] MovementState m_MovementState;
     Vector3 m_Velocity;
     [SerializeField] bool m_AllowJump;

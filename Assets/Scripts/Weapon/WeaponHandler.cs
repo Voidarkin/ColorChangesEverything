@@ -188,7 +188,7 @@ public class WeaponHandler : MonoBehaviour
         //currentRot = MathUtils.LerpTo(5.0f, currentRot, controlRotation, Time.fixedDeltaTime);
         Quaternion targetRot = Quaternion.Euler(controlRotation);
 
-        m_Pivot.transform.rotation = Quaternion.RotateTowards(HoldingObject.transform.rotation, targetRot, 100.0f * Time.fixedDeltaTime); //Quaternion.Euler(currentRot);
+        m_Pivot.transform.rotation = Quaternion.RotateTowards(HoldingObject.transform.rotation, targetRot, 200.0f * Time.fixedDeltaTime); //Quaternion.Euler(currentRot);
     }
 
     bool m_CanFire;
